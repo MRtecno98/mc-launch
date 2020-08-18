@@ -6,4 +6,6 @@
 
 **/target/
 
+**/*.md.html
+
 bin/
