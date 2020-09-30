@@ -25,6 +25,10 @@ import lombok.experimental.Delegate;
 import me.tecno.mclaunch.arguments.ArgumentsIndex;
 import me.tecno.mclaunch.assets.AssetsIndex;
 import me.tecno.mclaunch.executables.ExecutablesIndex;
+import me.tecno.mclaunch.indexing.IndexElement;
+import me.tecno.mclaunch.indexing.IndexElementDeserializer;
+import me.tecno.mclaunch.indexing.rules.ElementRule;
+import me.tecno.mclaunch.indexing.rules.ElementRuleDeserializer;
 import me.tecno.mclaunch.launch.LaunchOptions;
 import me.tecno.mclaunch.launch.LoggingOptions;
 import me.tecno.mclaunch.libraries.Library;
@@ -50,10 +54,10 @@ public class Version {
 	
 	public static Version fromVersionDataset(VersionDataset dataset) throws IOException {
 		Version v =  fromDescriptor(Request.Get(
-					dataset.getManifestURI())
-				.execute()
-				.returnContent()
-				.asStream());
+							dataset.getManifestURI())
+						.execute()
+						.returnContent()
+						.asStream());
 		v.getMetadata().setManifestURI(dataset.getManifestURI());
 		
 		return v;
@@ -65,7 +69,12 @@ public class Version {
 					@Override
 					public Version deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
 							throws JsonParseException {
-						Version base = new Gson().fromJson(json, Version.class);
+						Gson gson = new GsonBuilder()
+								.registerTypeAdapter(IndexElement.class, new IndexElementDeserializer())
+								.registerTypeAdapter(ElementRule.class, new ElementRuleDeserializer())
+								.create();
+						
+						Version base = gson.fromJson(json, Version.class);
 						VersionDataset metadata = context.deserialize(json, VersionDataset.class);
 						
 						LaunchOptions launchOptions = new LaunchOptions(
