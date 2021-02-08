@@ -25,7 +25,7 @@ public class ElementRuleDeserializer implements JsonDeserializer<IElementRule<Co
 		conds = obj.keySet().stream()
 			.filter((k) -> !k.equals("action"))
 			.map((k) -> {
-				Class<?> conditionClass = ConditionRegistry.getInstance()
+				Class<?> conditionClass = ConditionsRegistry.getInstance()
 						.getConditions().get(k);
 				if(conditionClass == null) return null;
 				
