@@ -9,6 +9,7 @@ import org.apache.http.client.fluent.Request;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.util.Collections;
 import java.util.Map;
 
@@ -16,7 +17,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AssetIndex {
 	private final String id;
-	private final String sha1, url;
+	private final URI url;
+	private final String sha1;
 	private final long size, totalSize;
 
 	private Map<String, AssetRecord> objects = Collections.emptyMap();

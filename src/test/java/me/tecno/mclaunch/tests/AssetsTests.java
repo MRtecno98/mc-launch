@@ -6,6 +6,7 @@ import me.tecno.mclaunch.assets.AssetIndex.AssetRecord;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,14 +29,14 @@ public class AssetsTests {
 		assertEquals(414035, index.getSize());
 		assertEquals(619175033, index.getTotalSize());
 		assertEquals("https://piston-meta.mojang.com/v1/packages/bebcc57ec5d1cf6d557b9641db3b6de6a0bea3e5/7.json",
-				index.getUrl());
+				index.getUrl().toString());
 	}
 
 	@Test
 	public void testAssetMetaDownload() throws IOException {
-		AssetIndex index = new AssetIndex("7", "fake-hash",
-				"https://piston-meta.mojang.com/v1/packages/bebcc57ec5d1cf6d557b9641db3b6de6a0bea3e5/7.json",
-				0, 0);
+		AssetIndex index = new AssetIndex("7",
+				URI.create("https://piston-meta.mojang.com/v1/packages/bebcc57ec5d1cf6d557b9641db3b6de6a0bea3e5/7.json"),
+				"fake-hash", 0, 0);
 
 		Map<String, AssetRecord> objects = index.downloadObjectRegistry();
 		System.out.printf("Asset index downloaded successfully, count: %d\n", objects.size());
