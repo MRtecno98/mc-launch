@@ -13,10 +13,10 @@ import lombok.Setter;
 import me.tecno.mclaunch.deserialization.URIDeserializer;
 
 @Getter
-@Setter(AccessLevel.PROTECTED)
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter(AccessLevel.PROTECTED)
 public class FileDataset {
 	private int size;
 	
@@ -24,4 +24,11 @@ public class FileDataset {
 	private URI url;
 	
 	private String sha1;
+
+	@Override
+	public String toString() {
+		String[] url = getUrl().toString().split("/");
+		return getClass().getSimpleName() + "(size=" + size + ", url=" + url[url.length - 1]
+				+ ", sha1=" + sha1.substring(0, 8) + ")";
+	}
 }
