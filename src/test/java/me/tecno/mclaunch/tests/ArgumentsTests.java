@@ -77,17 +77,17 @@ public class ArgumentsTests {
 	@Test
 	public void testArgumentsFeaturesEvaluation() throws IOException {
 		LaunchEnvironment env = new LaunchEnvironment();
-		String nodemo_nocres = getVersion().getArgumentsIndex().evaluateGameArguments(env);
+		String nodemo_nocres = getVersion().getArgumentIndex().evaluateGameArguments(env);
 		
 		assertEquals(NODEMO_NOCRES_C, nodemo_nocres);
 		
 		env.getProperties().put("is_demo_user", "true");
-		String demo_nocres = getVersion().getArgumentsIndex().evaluateGameArguments(env);
+		String demo_nocres = getVersion().getArgumentIndex().evaluateGameArguments(env);
 		
 		assertEquals(DEMO_NOCRES_C, demo_nocres);
 		
 		env.getProperties().put("has_custom_resolution", "true");
-		String demo_cres = getVersion().getArgumentsIndex().evaluateGameArguments(env);
+		String demo_cres = getVersion().getArgumentIndex().evaluateGameArguments(env);
 		
 		assertEquals(DEMO_CRES_C, demo_cres);
 		
@@ -107,22 +107,22 @@ public class ArgumentsTests {
 		LaunchEnvironment env = new LaunchEnvironment();
 		
 		emulateSystem("Windows 10", "10.", "x86");
-		String windows = getVersion().getArgumentsIndex().evaluateGameArguments(env);
-		String jvmWindows = getVersion().getArgumentsIndex().evaluateJVMArguments(env);
+		String windows = getVersion().getArgumentIndex().evaluateGameArguments(env);
+		String jvmWindows = getVersion().getArgumentIndex().evaluateJVMArguments(env);
 		
 		assertEquals(WINDOWS_C, windows);
 		assertEquals(JVM_WINDOWS_C, jvmWindows);
 		
 		emulateSystem("Linux", "5.4.0-1019-gcp", "amd64");
-		String linux = getVersion().getArgumentsIndex().evaluateGameArguments(env);
-		String jvmLinux = getVersion().getArgumentsIndex().evaluateJVMArguments(env);
+		String linux = getVersion().getArgumentIndex().evaluateGameArguments(env);
+		String jvmLinux = getVersion().getArgumentIndex().evaluateJVMArguments(env);
 		
 		assertEquals(LINUX_C, linux);
 		assertEquals(JVM_LINUX_C, jvmLinux);
 		
 		emulateSystem("Mac OSX", "5.4.0-1019-gcp", "amd64");
-		String osx = getVersion().getArgumentsIndex().evaluateGameArguments(env);
-		String jvmOsx = getVersion().getArgumentsIndex().evaluateJVMArguments(env);
+		String osx = getVersion().getArgumentIndex().evaluateGameArguments(env);
+		String jvmOsx = getVersion().getArgumentIndex().evaluateJVMArguments(env);
 		
 		assertEquals(OSX_C, osx);
 		assertEquals(JVM_OSX_C, jvmOsx);
