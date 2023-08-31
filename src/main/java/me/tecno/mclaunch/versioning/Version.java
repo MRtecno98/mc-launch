@@ -3,17 +3,15 @@ package me.tecno.mclaunch.versioning;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.Map;
 
+import me.tecno.mclaunch.launch.LoggingTarget;
 import org.apache.http.client.fluent.Request;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
 import lombok.AccessLevel;
@@ -22,33 +20,36 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Delegate;
-import me.tecno.mclaunch.arguments.ArgumentsIndex;
-import me.tecno.mclaunch.assets.AssetsIndex;
+import me.tecno.mclaunch.arguments.ArgumentIndex;
+import me.tecno.mclaunch.assets.AssetIndex;
 import me.tecno.mclaunch.executables.ExecutablesIndex;
 import me.tecno.mclaunch.indexing.IndexElement;
 import me.tecno.mclaunch.indexing.IndexElementDeserializer;
 import me.tecno.mclaunch.indexing.rules.ElementRule;
 import me.tecno.mclaunch.indexing.rules.ElementRuleDeserializer;
 import me.tecno.mclaunch.launch.LaunchOptions;
+import me.tecno.mclaunch.launch.LaunchOptions.JavaOptions;
 import me.tecno.mclaunch.launch.LoggingOptions;
 import me.tecno.mclaunch.libraries.Library;
 
 @Getter
-@Setter(AccessLevel.PRIVATE)
-@EqualsAndHashCode
 @ToString
+@EqualsAndHashCode
+@Setter(AccessLevel.PRIVATE)
 public class Version {
 	@Delegate
 	private VersionDataset metadata;
 	
-	private @SerializedName("assetIndex") AssetsIndex assetsIndex;
-	private @SerializedName("libraries") Collection<Library> librariesIndex;
-	private @SerializedName("downloads") ExecutablesIndex excecutablesIndex;
-	private @SerializedName("arguments") ArgumentsIndex argumentsIndex;
+	private @SerializedName("assetIndex") AssetIndex assetIndex;
+	private @SerializedName("libraries") Collection<Library> libraryIndex;
+	private @SerializedName("downloads") ExecutablesIndex executablesIndex;
+	private @SerializedName("arguments") ArgumentIndex argumentIndex;
 	
 	private LaunchOptions launchOptions;
 	
-	private @SerializedName("logging") LoggingOptions loggingOptions;
+	private @SerializedName("logging") Map<LoggingTarget, LoggingOptions> loggingOptions;
+
+	private int complianceLevel;
 	
 	private Version() {}
 	

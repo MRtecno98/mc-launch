@@ -32,12 +32,13 @@ public class DeserializationTests {
 		System.out.println("\tManifest URL: " + v.getManifestURI());
 		System.out.println("\tReleased on: " + v.getReleaseDate());
 		System.out.println("\tLast update: " + v.getLastUpdate());
-		System.out.println("\tArguments: " + v.getArgumentsIndex());
-		System.out.println("\tAssets: " + v.getAssetsIndex());
-		System.out.println("\tLibraries count: " + v.getLibrariesIndex().size());
-		System.out.println("\tExecutables: " + v.getExcecutablesIndex());
+		System.out.println("\tArguments: " + v.getArgumentIndex());
+		System.out.println("\tAssets: " + v.getAssetIndex());
+		System.out.println("\tLibraries count: " + v.getLibraryIndex().size());
+		System.out.println("\tExecutables: " + v.getExecutablesIndex());
 		System.out.println("\tLaunch options: " + v.getLaunchOptions());
 		System.out.println("\tLogging options: " + v.getLoggingOptions());
+		System.out.println("\tCompliance level: " + v.getComplianceLevel());
 		System.out.println();
 	}
 	
