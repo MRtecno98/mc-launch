@@ -17,7 +17,7 @@ public class LoggingTests {
 
 		LoggingOptions options = new Gson().fromJson(json, LoggingOptions.class);
 
-		System.out.println("Deserialized logging options: " + options);
+		System.out.println("Deserialized logging options:\n" + options + "\n");
 
 		assertEquals("-Dlog4j.configurationFile=${path}", options.argument());
 		assertEquals("client-1.12.xml", options.file().getId());

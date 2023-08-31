@@ -7,9 +7,11 @@ import java.util.stream.Collector;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.ToString;
 import me.tecno.mclaunch.launch.LaunchEnvironment;
 
 @Getter
+@ToString
 @AllArgsConstructor
 public class ElementRule<T> implements IElementRule<T> {
 	@NonNull

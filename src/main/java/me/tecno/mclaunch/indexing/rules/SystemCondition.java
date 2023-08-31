@@ -13,4 +13,9 @@ public class SystemCondition<T> extends HashMap<String, String> implements RuleC
 		return keySet().stream()
 			.allMatch((k) -> SystemInfo.getProperties().getProperty("os." + k).matches(get(k)));
 	}
+
+	@Override
+	public String toString() {
+		return "System" + super.toString();
+	}
 }

@@ -12,4 +12,9 @@ public class FeaturesCondition<T> extends HashMap<String, String> implements Rul
 		return keySet().stream()
 				.allMatch((k) -> get(k).equals(env.getProperties().get(k)));
 	}
+
+	@Override
+	public String toString() {
+		return "Features" + super.toString();
+	}
 }
