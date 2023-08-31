@@ -1,5 +1,6 @@
 package me.tecno.mclaunch.launch;
 
-public class LoggingOptions {
+import me.tecno.mclaunch.structure.IdentifiedFileDataset;
 
+public record LoggingOptions(String argument, IdentifiedFileDataset file, LoggingType type) {
 }
