@@ -1,9 +1,5 @@
 package me.tecno.mclaunch.launch;
 
-import lombok.Value;
-
-@Value
-public class LaunchOptions {
-	private String mainClass;
-	private int minimumLauncherVersion;
+public record LaunchOptions(String mainClass, int minimumLauncherVersion, JavaOptions javaVersion) {
+	public record JavaOptions(String component, int majorVersion) {}
 }
