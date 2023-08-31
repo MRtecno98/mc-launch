@@ -17,10 +17,10 @@ import me.tecno.mclaunch.deserialization.DateDeserializer;
 import me.tecno.mclaunch.deserialization.URIDeserializer;
 
 @Getter
-@Setter(AccessLevel.PACKAGE)
 @ToString
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
+@Setter(AccessLevel.PACKAGE)
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class VersionDataset {
 	private String id;
 	private VersionType type;

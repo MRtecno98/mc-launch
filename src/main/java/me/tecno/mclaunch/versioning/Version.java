@@ -65,31 +65,29 @@ public class Version {
 	
 	public static Version fromDescriptor(InputStream versionDescriptor) {
 		Gson gson = new GsonBuilder()
-				.registerTypeAdapter(Version.class, new JsonDeserializer<Version>() {
-					@Override
-					public Version deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-							throws JsonParseException {
-						Gson gson = new GsonBuilder()
-								.registerTypeAdapter(IndexElement.class, new IndexElementDeserializer())
-								.registerTypeAdapter(ElementRule.class, new ElementRuleDeserializer())
-								.create();
-						
-						Version base = gson.fromJson(json, Version.class);
-						VersionDataset metadata = context.deserialize(json, VersionDataset.class);
-						
-						LaunchOptions launchOptions = new LaunchOptions(
-								json.getAsJsonObject()
-									.get("mainClass")
-									.getAsString(),
-								json.getAsJsonObject()
-									.get("minimumLauncherVersion")
-									.getAsInt());
-						
-						base.setMetadata(metadata);
-						base.setLaunchOptions(launchOptions);
-						
-						return base;
-					}
+				.registerTypeAdapter(Version.class, (JsonDeserializer<Version>) (json, typeOfT, context) -> {
+					Gson gson1 = new GsonBuilder()
+							.registerTypeAdapter(IndexElement.class, new IndexElementDeserializer())
+							.registerTypeAdapter(ElementRule.class, new ElementRuleDeserializer())
+							.create();
+
+					Version base = gson1.fromJson(json, Version.class);
+					VersionDataset metadata = context.deserialize(json, VersionDataset.class);
+
+					LaunchOptions launchOptions = new LaunchOptions(
+							json.getAsJsonObject()
+								.get("mainClass")
+								.getAsString(),
+							json.getAsJsonObject()
+								.get("minimumLauncherVersion")
+								.getAsInt(),
+							gson1.fromJson(json.getAsJsonObject().get("javaVersion"),
+									JavaOptions.class));
+
+					base.setMetadata(metadata);
+					base.setLaunchOptions(launchOptions);
+
+					return base;
 				}).create();
 		
 		return gson.fromJson(new InputStreamReader(versionDescriptor), Version.class);

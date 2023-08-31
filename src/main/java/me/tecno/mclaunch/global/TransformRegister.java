@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class TransformRegister implements PropertyTransform {
-	private List<PropertyTransform> transforms = new ArrayList<>();
+	private final List<PropertyTransform> transforms = new ArrayList<>();
 	
 	static {
 		getGlobalRegister().registerTransform(new SystemNameTransform());
@@ -21,7 +21,7 @@ public class TransformRegister implements PropertyTransform {
 	
 	@Override
 	public String transform(String key, String value) {
-		return getTransforms().stream().sequential().reduce(
+		return getTransforms().stream().reduce(
 				value, (v, t) -> t.transform(key, v), 
 				(a, b) -> {throw new RuntimeException();});
 	}

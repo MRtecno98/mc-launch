@@ -2,6 +2,7 @@ package me.tecno.mclaunch.indexing.rules;
 
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.google.gson.JsonDeserializationContext;
@@ -32,7 +33,7 @@ public class ElementRuleDeserializer implements JsonDeserializer<IElementRule<Co
 				return context.<RuleCondition<Collection<String>>>deserialize(
 						obj.get(k), conditionClass);
 				})
-			.filter(r -> r != null)
+			.filter(Objects::nonNull)
 			.collect(Collectors.toList());
 		
 		return new ElementRule<Collection<String>>(act, conds);

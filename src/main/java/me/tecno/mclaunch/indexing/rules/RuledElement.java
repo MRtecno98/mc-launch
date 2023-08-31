@@ -9,7 +9,7 @@ import me.tecno.mclaunch.indexing.IndexElement;
 import me.tecno.mclaunch.launch.LaunchEnvironment;
 
 public class RuledElement<T> extends ConditionedElement<T> implements IndexElement<T> {
-	private Collection<IElementRule<T>> rules;
+	private final Collection<IElementRule<T>> rules;
 	
 	@SafeVarargs
 	public RuledElement(T value, IElementRule<T>... rules) {

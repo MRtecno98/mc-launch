@@ -11,7 +11,7 @@ public enum RuleAction {
 	@SerializedName("allow") ALLOW(Function.identity()),
 	@SerializedName("disallow")  DENY((b) -> !b);
 	
-	private Function<Boolean, Boolean> evaluator;
+	private final Function<Boolean, Boolean> evaluator;
 	
 	public boolean process(boolean b) {
 		return evaluator.apply(b);

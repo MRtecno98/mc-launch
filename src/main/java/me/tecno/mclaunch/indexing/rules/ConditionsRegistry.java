@@ -5,9 +5,10 @@ import java.util.Map;
 
 import lombok.Getter;
 
+@Getter
 public class ConditionsRegistry {
 	@SuppressWarnings("rawtypes")
-	private @Getter Map<String, Class<? extends RuleCondition>> conditions = new HashMap<>();
+	private final Map<String, Class<? extends RuleCondition>> conditions = new HashMap<>();
 	
 	static {
 		getInstance().getConditions().put("features", FeaturesCondition.class);

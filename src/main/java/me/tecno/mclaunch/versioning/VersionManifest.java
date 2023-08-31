@@ -24,7 +24,7 @@ import lombok.Value;
 @Value
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class VersionManifest {
-	public static final String VERSION_MANIFEST = "https://launchermeta.mojang.com/mc/game/version_manifest.json";
+	public static final String VERSION_MANIFEST = "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json";
 	
 	private VersionDataset latestRelease;
 	private VersionDataset latestSnapshot;
@@ -40,31 +40,27 @@ public class VersionManifest {
 	}
 	
 	public static JsonDeserializer<VersionManifest> getDeserializer() {
-		return  new JsonDeserializer<VersionManifest>() {
-			@Override
-			public VersionManifest deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-					throws JsonParseException {
-				
-				JsonObject j = json.getAsJsonObject();
-				
-				List<VersionDataset> datasets = context.deserialize(j.getAsJsonArray("versions"), 
-						new TypeToken<List<VersionDataset>>(){}.getType());
-				
-				String latestRelease = j.getAsJsonObject("latest").get("release").getAsString();
-				String latestSnapshot = j.getAsJsonObject("latest").get("snapshot").getAsString();
-				
-				VersionDataset vLatestRelease = datasets.stream()
-						.filter((d) -> d.getId().equals(latestRelease))
-						.findFirst()
-						.orElseThrow(() -> new IllegalStateException("Latest release not found"));
-				
-				VersionDataset vLatestSnapshot = datasets.stream()
-						.filter((d) -> d.getId().equals(latestSnapshot))
-						.findFirst()
-						.orElseThrow(() -> new IllegalStateException("Latest snapshot not found"));
-				
-				return new VersionManifest(vLatestRelease, vLatestSnapshot, datasets);
-			}
+		return (json, typeOfT, context) -> {
+
+			JsonObject j = json.getAsJsonObject();
+
+			List<VersionDataset> datasets = context.deserialize(j.getAsJsonArray("versions"),
+					new TypeToken<List<VersionDataset>>(){}.getType());
+
+			String latestRelease = j.getAsJsonObject("latest").get("release").getAsString();
+			String latestSnapshot = j.getAsJsonObject("latest").get("snapshot").getAsString();
+
+			VersionDataset vLatestRelease = datasets.stream()
+					.filter((d) -> d.getId().equals(latestRelease))
+					.findFirst()
+					.orElseThrow(() -> new IllegalStateException("Latest release not found"));
+
+			VersionDataset vLatestSnapshot = datasets.stream()
+					.filter((d) -> d.getId().equals(latestSnapshot))
+					.findFirst()
+					.orElseThrow(() -> new IllegalStateException("Latest snapshot not found"));
+
+			return new VersionManifest(vLatestRelease, vLatestSnapshot, datasets);
 		};
 	}
 	
