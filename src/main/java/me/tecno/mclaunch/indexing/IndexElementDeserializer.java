@@ -40,9 +40,7 @@ public class IndexElementDeserializer implements JsonDeserializer<IndexElement<C
 			
 			return new RuledElement<>(value,
 					context.<Collection<IElementRule<Collection<String>>>>deserialize(obj.get("rules"),
-							new TypeToken<Collection<ElementRule<String>>>() {
-							}.getType()));
+							new TypeToken<Collection<ElementRule<String>>>() {}.getType()));
 		} else throw new JsonParseException("Invalid index element descriptor");
 	}
-
 }

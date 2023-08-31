@@ -1,24 +1,10 @@
 package me.tecno.mclaunch.versioning;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Collection;
-import java.util.Map;
-
-import me.tecno.mclaunch.launch.LoggingTarget;
-import org.apache.http.client.fluent.Request;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.annotations.SerializedName;
-
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.Delegate;
 import me.tecno.mclaunch.arguments.ArgumentIndex;
 import me.tecno.mclaunch.assets.AssetIndex;
@@ -30,7 +16,15 @@ import me.tecno.mclaunch.indexing.rules.ElementRuleDeserializer;
 import me.tecno.mclaunch.launch.LaunchOptions;
 import me.tecno.mclaunch.launch.LaunchOptions.JavaOptions;
 import me.tecno.mclaunch.launch.LoggingOptions;
+import me.tecno.mclaunch.launch.LoggingTarget;
 import me.tecno.mclaunch.libraries.Library;
+import org.apache.http.client.fluent.Request;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Collection;
+import java.util.Map;
 
 @Getter
 @ToString
@@ -69,7 +63,7 @@ public class Version {
 				.registerTypeAdapter(Version.class, (JsonDeserializer<Version>) (json, typeOfT, context) -> {
 					Gson gson1 = new GsonBuilder()
 							.registerTypeAdapter(IndexElement.class, new IndexElementDeserializer())
-							.registerTypeAdapter(ElementRule.class, new ElementRuleDeserializer())
+							.registerTypeAdapter(ElementRule.class, new ElementRuleDeserializer<>())
 							.create();
 
 					Version base = gson1.fromJson(json, Version.class);
